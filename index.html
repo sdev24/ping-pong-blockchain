@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Game - Blockchain Edition</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-align: center;
+            background: linear-gradient(45deg, #0a84ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.8;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .game-versions {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .version-card {
+            background: #222;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            min-width: 300px;
+            border: 2px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .version-card:hover {
+            border-color: #0a84ff;
+            transform: translateY(-5px);
+        }
+        
+        .version-card h2 {
+            margin-top: 0;
+            color: #0a84ff;
+        }
+        
+        .version-card p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .play-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #0a84ff, #0066cc);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .play-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #0066cc, #004499);
+        }
+        
+        .blockchain-button {
+            background: linear-gradient(45deg, #ff6b00, #ff8800);
+        }
+        
+        .blockchain-button:hover {
+            background: linear-gradient(45deg, #cc5500, #cc6600);
+        }
+        
+        .features {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .features h3 {
+            color: #0a84ff;
+            margin-top: 0;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature::before {
+            content: "✅";
+        }
+        
+        @media (max-width: 768px) {
+            .game-versions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🏓 Ping Pong Game</h1>
+    <p class="subtitle">Classic gameplay meets blockchain technology</p>
+    
+    <div class="game-versions">
+        <div class="version-card">
+            <h2>🎮 Classic Edition (v1)</h2>
+            <p>Pure HTML5 game. No setup required - just click and play!</p>
+            <ul style="text-align: left; opacity: 0.8;">
+                <li>Single HTML file</li>
+                <li>1 vs 2 player modes</li>
+                <li>AI opponent</li>
+                <li>Local scoring</li>
+                <li>Works offline</li>
+            </ul>
+            <a href="ping-pong.html" class="play-button">Play Classic</a>
+        </div>
+        
+        <div class="version-card">
+            <h2>⛓️ Blockchain Edition (v2)</h2>
+            <p>Same great game + global leaderboards on Arbitrum blockchain!</p>
+            <ul style="text-align: left; opacity: 0.8;">
+                <li>All v1 features</li>
+                <li>MetaMask integration</li>
+                <li>Global leaderboards</li>
+                <li>Immutable scores</li>
+                <li>Low gas fees (~$0.01)</li>
+            </ul>
+            <a href="ping-pong-v2.html" class="play-button blockchain-button">Play Blockchain</a>
+        </div>
+    </div>
+    
+    <div class="features">
+        <h3>🎯 Game Features</h3>
+        <div class="feature-list">
+            <div class="feature">First to 15 points wins</div>
+            <div class="feature">Responsive paddle controls</div>
+            <div class="feature">Adjustable ball speed</div>
+            <div class="feature">Smart AI opponent</div>
+            <div class="feature">Smooth 60fps gameplay</div>
+            <div class="feature">Mobile friendly</div>
+            <div class="feature">Zero installation</div>
+            <div class="feature">Open source</div>
+        </div>
+        
+        <h3>🚀 How to Play</h3>
+        <p><strong>Controls:</strong> Player 1 uses W/S keys, Player 2 uses arrow keys</p>
+        <p><strong>Start:</strong> Press SPACEBAR to begin</p>
+        <p><strong>Win:</strong> First player to reach 15 points wins the game</p>
+        
+        <h3>⛓️ Blockchain Features (v2 only)</h3>
+        <div class="feature-list">
+            <div class="feature">Connect MetaMask wallet</div>
+            <div class="feature">Submit scores to Arbitrum</div>
+            <div class="feature">Global leaderboards</div>
+            <div class="feature">Player statistics</div>
+            <div class="feature">Tamper-proof scoring</div>
+            <div class="feature">Works without wallet too</div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 40px; text-align: center; opacity: 0.6;">
+        <p>Built with ❤️ for the blockchain gaming community</p>
+        <p><a href="https://github.com/yourusername/ping-pong-blockchain" style="color: #0a84ff;">View on GitHub</a></p>
+    </div>
+</body>
+</html>

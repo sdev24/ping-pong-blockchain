@@ -1,0 +1,26 @@
+node_modules/
+.env
+cache/
+artifacts/
+coverage/
+coverage.json
+typechain/
+
+# Hardhat files
+cache
+artifacts
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Private keys
+*.key
+.secret
