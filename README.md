@@ -1,10 +1,16 @@
-# 🏓 Ping Pong Game v2 - Blockchain Edition
+# 🏓 Ping Pong Game - Complete Collection
 
-A modern ping pong game with blockchain score tracking on Arbitrum. Play locally or compete globally with immutable leaderboards!
+A modern ping pong game collection with 4 different versions: Classic, Blockchain, Mobile, and Mobile Blockchain editions. Play locally or compete globally with immutable leaderboards!
 
 ## 🎮 Play the Game
 
-**Live Demo:** [Coming Soon - Deploy to your preferred hosting]
+**Live Demo:** [https://sdev24.github.io/ping-pong-blockchain/](https://sdev24.github.io/ping-pong-blockchain/)
+
+### 🕹️ Game Versions
+- **Classic Edition** - Pure HTML5 game, no setup required
+- **Blockchain Edition** - Global leaderboards on Arbitrum blockchain
+- **Mobile Edition** - Touch-friendly mobile optimized version
+- **Mobile Blockchain** - Mobile gaming with blockchain features
 
 ## ✨ Features
 
@@ -26,6 +32,23 @@ A modern ping pong game with blockchain score tracking on Arbitrum. Play locally
 - ✅ Low gas fees (~$0.01 per score submission)
 - ✅ Works offline without wallet connection
 
+### v3 (Mobile Edition)
+- ✅ Touch/drag controls for paddles
+- ✅ Responsive canvas that scales to screen size
+- ✅ Touch-friendly UI with 44px minimum button sizes
+- ✅ Visual paddle zones with active feedback
+- ✅ Portrait and landscape orientation support
+- ✅ Prevents page scrolling during gameplay
+- ✅ Battery optimized for mobile devices
+
+### v4 (Mobile Blockchain Edition)
+- ✅ All mobile edition features
+- ✅ Mobile-optimized Web3 wallet integration
+- ✅ Touch-friendly blockchain score submission
+- ✅ Responsive leaderboard display
+- ✅ Mobile wallet deep linking support
+- ✅ Optimized for mobile network conditions
+
 ## 🚀 Quick Start
 
 ### Play Locally (v1)
@@ -39,6 +62,18 @@ A modern ping pong game with blockchain score tracking on Arbitrum. Play locally
 3. Get some ETH on Arbitrum for gas fees
 4. Open `ping-pong-v2.html` in browser
 5. Connect wallet and start competing!
+
+### Play Mobile (v3)
+1. Open `ping-pong-mobile.html` on any mobile device
+2. Use touch controls to drag paddles
+3. Tap center to start/pause game
+4. Works in portrait and landscape modes
+
+### Play Mobile Blockchain (v4)
+1. Install mobile wallet (MetaMask Mobile, Trust Wallet, etc.)
+2. Open `ping-pong-mobile-blockchain.html` on mobile device
+3. Connect wallet and compete on global leaderboards
+4. Optimized for mobile Web3 experience
 
 ## 🔧 Development Setup
 
@@ -75,11 +110,15 @@ const CONTRACT_ADDRESS = 'YOUR_DEPLOYED_CONTRACT_ADDRESS';
 ## 📁 Project Structure
 
 ```
-├── ping-pong.html              # v1 - Local game
-├── ping-pong-v2.html           # v2 - Blockchain edition
+├── index.html                   # Main page showcasing all versions
+├── ping-pong.html              # v1 - Classic desktop game
+├── ping-pong-v2.html           # v2 - Desktop blockchain edition
+├── ping-pong-mobile.html       # v3 - Mobile touch-friendly version
+├── ping-pong-mobile-blockchain.html # v4 - Mobile blockchain edition
 ├── contracts/
 │   └── PingPongLeaderboard.sol  # Smart contract
 ├── deploy-contract.js           # Deployment script
+├── deploy-simple.js            # Simple deployment script
 ├── hardhat.config.js           # Hardhat configuration
 ├── package.json                # Dependencies
 └── README.md                   # This file
@@ -88,10 +127,18 @@ const CONTRACT_ADDRESS = 'YOUR_DEPLOYED_CONTRACT_ADDRESS';
 ## 🎯 How to Play
 
 ### Controls
+
+#### Desktop Versions (v1, v2)
 - **Player 1:** W (up) / S (down)
 - **Player 2:** Arrow keys (up/down)
 - **Start/Pause:** Spacebar
 - **Reset:** Reset button
+
+#### Mobile Versions (v3, v4)
+- **Paddle Control:** Touch and drag in paddle zones
+- **Start/Pause:** Tap center of screen
+- **Game Controls:** Touch-friendly buttons
+- **Responsive:** Auto-scales to screen size
 
 ### Game Modes
 - **2-Player:** Classic competitive mode
@@ -143,7 +190,7 @@ const CONTRACT_ADDRESS = 'YOUR_DEPLOYED_CONTRACT_ADDRESS';
 
 ### Contract Address
 ```
-Arbitrum Mainnet: [Deploy and update here]
+Arbitrum Mainnet: 0x1AEAFBB8175d278FA63CBa529a2CEbdC98cA3e08
 ```
 
 ### Key Functions
@@ -165,10 +212,12 @@ Arbitrum Mainnet: [Deploy and update here]
 
 ## 📱 Mobile Support
 
-Game is fully responsive and works on:
-- ✅ Desktop browsers
-- ✅ Mobile phones (touch controls planned)
-- ✅ Tablets
+All game versions work across devices:
+- ✅ Desktop browsers (v1, v2)
+- ✅ Mobile phones with touch controls (v3, v4)
+- ✅ Tablets with responsive design
+- ✅ Portrait and landscape orientations
+- ✅ Mobile Web3 wallet integration (v4)
 
 ## 🤝 Contributing
 
@@ -190,6 +239,8 @@ Having issues?
 4. Game works offline without blockchain features
 
 ## 🎉 Credits
+
+**Created by:** Sharan Konerira
 
 Built with ❤️ for the blockchain gaming community!
 
