@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="screen-orientation" content="landscape">
-    <meta name="mobile-web-app-capable" content="yes">
     <title>Ping Pong Game - Mobile Blockchain Edition</title>
     <style>
         * {
@@ -270,40 +268,9 @@
         }
 
         @media (orientation: landscape) {
-            body {
-                padding: 5px;
-            }
-            
             #gameCanvas {
                 max-width: 95vw;
-                max-height: 60vh;
-            }
-            
-            #score {
-                font-size: 16px;
-                margin-bottom: 10px;
-            }
-            
-            #controls {
-                margin-top: 10px;
-                gap: 8px;
-            }
-            
-            #instructions {
-                font-size: 12px;
-                margin-top: 10px;
-            }
-            
-            #web3Panel {
-                padding: 10px;
-                margin-top: 15px;
-            }
-        }
-        
-        @media (orientation: portrait) {
-            #gameCanvas {
-                max-width: 90vw;
-                max-height: 40vh;
+                height: 50vh;
             }
         }
     </style>
@@ -419,15 +386,11 @@
         // Mobile-specific setup
         function setupMobileCanvas() {
             const container = document.getElementById('gameContainer');
+            const rect = container.getBoundingClientRect();
             
-            // Calculate optimal canvas size based on orientation
-            const isLandscape = window.innerWidth > window.innerHeight;
-            const padding = isLandscape ? 10 : 20;
+            const maxWidth = Math.min(window.innerWidth - 20, 800);
+            const maxHeight = Math.min(window.innerHeight * 0.4, 400);
             
-            const maxWidth = Math.min(window.innerWidth - padding, 800);
-            const maxHeight = Math.min(window.innerHeight * (isLandscape ? 0.6 : 0.4), 400);
-            
-            // Maintain aspect ratio
             const aspectRatio = 800 / 400;
             let canvasWidth = maxWidth;
             let canvasHeight = maxWidth / aspectRatio;
@@ -439,21 +402,12 @@
             
             canvas.style.width = canvasWidth + 'px';
             canvas.style.height = canvasHeight + 'px';
-            
-            // Set actual canvas resolution
             canvas.width = 800;
             canvas.height = 400;
-            
-            // Re-render the game after resize
-            render();
         }
 
         setupMobileCanvas();
         window.addEventListener('resize', setupMobileCanvas);
-        window.addEventListener('orientationchange', () => {
-            // Delay to let the orientation change complete
-            setTimeout(setupMobileCanvas, 100);
-        });
 
         // Game objects
         class Ball {
@@ -571,25 +525,20 @@
 
         function handleTouchStart(e) {
             e.preventDefault();
-            const touch = e.touches[0];
-            const rect = e.target.getBoundingClientRect();
-            const canvasRect = canvas.getBoundingClientRect();
+            const pos = getTouchPos(e);
             
-            // Convert touch position to canvas coordinates
-            const scaleX = canvas.width / canvasRect.width;
-            const scaleY = canvas.height / canvasRect.height;
-            const canvasX = (touch.clientX - canvasRect.left) * scaleX;
-            const canvasY = (touch.clientY - canvasRect.top) * scaleY;
-            
-            // Determine which paddle zone was touched
-            if (e.target === leftPaddleZone) {
+            if (pos.x < canvas.width * 0.25) {
                 activePaddle = player1;
                 leftPaddleZone.classList.add('active');
-                player1.setTargetY(canvasY);
-            } else if (e.target === rightPaddleZone && !singlePlayerMode) {
-                activePaddle = player2;
-                rightPaddleZone.classList.add('active');
-                player2.setTargetY(canvasY);
+                player1.setTargetY(pos.y);
+            } else if (pos.x > canvas.width * 0.75) {
+                if (!singlePlayerMode) {
+                    activePaddle = player2;
+                    rightPaddleZone.classList.add('active');
+                    player2.setTargetY(pos.y);
+                }
+            } else {
+                toggleGame();
             }
         }
 
@@ -597,12 +546,8 @@
             e.preventDefault();
             if (!activePaddle) return;
             
-            const touch = e.touches[0];
-            const canvasRect = canvas.getBoundingClientRect();
-            const scaleY = canvas.height / canvasRect.height;
-            const canvasY = (touch.clientY - canvasRect.top) * scaleY;
-            
-            activePaddle.setTargetY(canvasY);
+            const pos = getTouchPos(e);
+            activePaddle.setTargetY(pos.y);
         }
 
         function handleTouchEnd(e) {
@@ -612,24 +557,17 @@
             rightPaddleZone.classList.remove('active');
         }
 
-        // Add touch event listeners to paddle zones
+        canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+        canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+        canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+
         leftPaddleZone.addEventListener('touchstart', handleTouchStart, { passive: false });
         leftPaddleZone.addEventListener('touchmove', handleTouchMove, { passive: false });
         leftPaddleZone.addEventListener('touchend', handleTouchEnd, { passive: false });
-        
+
         rightPaddleZone.addEventListener('touchstart', handleTouchStart, { passive: false });
         rightPaddleZone.addEventListener('touchmove', handleTouchMove, { passive: false });
         rightPaddleZone.addEventListener('touchend', handleTouchEnd, { passive: false });
-        
-        // Add touch event listeners to canvas for center tap
-        canvas.addEventListener('touchstart', (e) => {
-            const pos = getTouchPos(e);
-            // Only handle center taps (not in paddle zones)
-            if (pos.x >= canvas.width * 0.25 && pos.x <= canvas.width * 0.75) {
-                e.preventDefault();
-                toggleGame();
-            }
-        }, { passive: false });
 
         canvas.addEventListener('mousedown', (e) => {
             const rect = canvas.getBoundingClientRect();
@@ -767,33 +705,27 @@
         // Web3 Functions
         async function connectWallet() {
             try {
-                // Check for mobile MetaMask or other Web3 providers
                 if (!window.ethereum) {
-                    // Try to detect mobile wallet providers
-                    if (typeof window.ethereum === 'undefined' && /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                        // Mobile device without MetaMask - redirect to MetaMask mobile
-                        window.open('https://metamask.app.link/dapp/' + window.location.href, '_blank');
-                        throw new Error('Please open this page in MetaMask mobile browser or install MetaMask app');
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        // Mobile device: prompt to open in MetaMask app browser
+                        const dappUrl = window.location.href.replace(/^https?:\/\//, '');
+                        window.location.href = 'https://metamask.app.link/dapp/' + dappUrl;
+                        connectionStatus.textContent = 'Please open this page in the MetaMask app browser.';
+                        return;
                     } else {
-                        throw new Error('MetaMask not installed. Please install MetaMask extension or use MetaMask mobile app');
+                        connectionStatus.textContent = 'MetaMask not installed. Please install MetaMask extension or use MetaMask mobile app.';
+                        return;
                     }
                 }
-                
                 connectWalletBtn.textContent = 'Connecting...';
                 connectWalletBtn.disabled = true;
-                
-                const accounts = await window.ethereum.request({
-                    method: 'eth_requestAccounts'
-                });
-                
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 if (accounts.length === 0) {
                     throw new Error('No accounts found');
                 }
-                
                 provider = new ethers.providers.Web3Provider(window.ethereum);
                 signer = provider.getSigner();
                 userAddress = accounts[0];
-                
                 const chainId = await provider.getNetwork().then(network => network.chainId);
                 if (chainId !== ARBITRUM_CHAIN_ID) {
                     try {
@@ -808,11 +740,7 @@
                                 params: [{
                                     chainId: '0xa4b1',
                                     chainName: 'Arbitrum One',
-                                    nativeCurrency: {
-                                        name: 'ETH',
-                                        symbol: 'ETH',
-                                        decimals: 18
-                                    },
+                                    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
                                     rpcUrls: ['https://arb1.arbitrum.io/rpc'],
                                     blockExplorerUrls: ['https://arbiscan.io/']
                                 }]
@@ -822,17 +750,14 @@
                         }
                     }
                 }
-                
                 if (CONTRACT_ADDRESS !== '0x0000000000000000000000000000000000000000') {
                     contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
                 }
-                
                 updateWalletUI();
                 loadLeaderboard();
-                
             } catch (error) {
                 console.error('Wallet connection error:', error);
-                connectionStatus.textContent = `Connection failed: ${error.message}`;
+                connectionStatus.textContent = 'Connection failed: ' + (error && error.message ? error.message : error);
                 connectWalletBtn.textContent = 'Connect Wallet';
                 connectWalletBtn.disabled = false;
             }

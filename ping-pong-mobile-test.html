@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Button Touch Test</title>
+  <style>
+    body { display: flex; align-items: center; justify-content: center; height: 100vh; background: #222; }
+    button { font-size: 24px; padding: 24px 48px; border-radius: 12px; border: 2px solid #0a84ff; background: #0a84ff; color: #fff; }
+    button:active { background: #005bb5; }
+  </style>
+</head>
+<body>
+  <button id="testBtn">Test Button</button>
+  <script>
+    const btn = document.getElementById('testBtn');
+    btn.addEventListener('click', () => { alert('Button clicked!'); });
+    btn.addEventListener('touchend', () => { alert('Button touched!'); });
+  </script>
+</body>
+</html> 
